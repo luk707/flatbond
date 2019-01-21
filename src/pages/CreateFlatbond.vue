@@ -6,23 +6,35 @@ import constants from "../constants";
 
 import scalarFormatter from "../formatters/scalar";
 import calculateFlatbondBreakdown from "../util/calculate-flatbond-breakdown";
+import validUkPostcode from "../util/valid-uk-postcode";
 
 import Loader from "../components/Loader.vue";
 import SliderControl from "../components/SliderControl.vue";
 import SwitchControl from "../components/SwitchControl.vue";
+import InputControl from "../components/InputControl.vue";
 
 export default {
   name: "CreateFlatbond",
   components: {
     Loader,
     SliderControl,
-    SwitchControl
+    SwitchControl,
+    InputControl
   },
   data() {
     return {
       loading: true,
       submitting: false,
-      error: null
+      error: null,
+      postcodeValidator: v => {
+        if (!v) {
+          return "You must enter your postcode";
+        }
+        if (!validUkPostcode(v)) {
+          return "You must enter a valid UK postcode";
+        }
+        return "";
+      }
     };
   },
   created() {
@@ -99,13 +111,10 @@ export default {
   },
   methods: {
     ...mapActions(["setPaymentPeriod", "setRentValue", "setPostcode"]),
-    handleChangePostcode(e) {
-      this.setPostcode(e.target.value);
-    },
     handleSubmit(e) {
       e.preventDefault();
-      if (!this.postcode) {
-        this.error = "You must specify your postcode to continue.";
+      if (this.postcodeValidator(this.postcode)) {
+        this.error = "Correct errors in the form before continuing";
         return;
       }
       // TODO, validate
@@ -159,7 +168,12 @@ export default {
           <div>
             <label>Postcode</label>
           </div>
-          <input :value="postcode" @input="handleChangePostcode">
+          <InputControl
+            :format="v => v.toUpperCase()"
+            :validate="postcodeValidator"
+            :value="postcode"
+            @handleChange="setPostcode($event)"
+          />
           <p
             class="caveat"
           >Membership fee (excl. VAT) {{flatbondBreakdown.membership_fee_before_vat}}</p>
@@ -207,21 +221,6 @@ label {
   font-weight: 800;
   text-transform: uppercase;
   font-size: 14px;
-}
-
-input {
-  margin-top: 3px;
-  border: 1px solid #eee;
-  border-radius: 3px;
-  padding: 10px 16px;
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-input:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px #aabbff;
 }
 
 .caveat {

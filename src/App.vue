@@ -13,6 +13,10 @@ export default {
 <style module>
 @import url("https://fonts.googleapis.com/css?family=Sarabun:400,600,800");
 
+body {
+  background-color: #fbfbfb;
+}
+
 .App {
   padding: 20px;
   font-family: "Sarabun", sans-serif;

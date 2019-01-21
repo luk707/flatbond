@@ -8,6 +8,9 @@ module.exports = {
         }
       }
     ],
-    "@neutrinojs/jest"
+    [
+      "@neutrinojs/jest",
+      { testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$" }
+    ]
   ]
 };

@@ -69,7 +69,7 @@ export default {
           :min="rentRangeMin"
           :max="rentRangeMax"
           :value="rentValue"
-          :step="100"
+          :step="paymentPeriod === 'Weekly' ? 500 : 1000"
           @handleChange="setRentValue($event)"
         />
         Payment: {{paymentPeriod}}

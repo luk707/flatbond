@@ -81,7 +81,7 @@ export default {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #7b93db;
+  background: #6785ff;
   cursor: pointer;
 }
 
@@ -89,7 +89,7 @@ export default {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #7b93db;
+  background: #6785ff;
   cursor: pointer;
 }
 </style>

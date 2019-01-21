@@ -9,15 +9,15 @@ export default {
   data() {
     return {
       weekly: true,
-      weeklyRent: {
-        value: 25
-      }
+      rentValue: 25,
+      rentMin: 0,
+      rentMax: 1000
     };
   },
   methods: {
-    handleChange(payload) {
+    handleRentChange(payload) {
       // Crude way to turn a string into a number
-      this.weeklyRent.value = ~~payload;
+      this.rentValue = ~~payload;
     }
   }
 };
@@ -26,13 +26,13 @@ export default {
 <template>
   <div :class="$style.App">
     <h1>Flatbond app</h1>
-    {{weeklyRent.value}}
+    {{rentValue}}
     <Slider
       :helpText="'Adjust rent'"
-      :min="1"
-      :max="10"
-      :value="weeklyRent.value"
-      @handleChange="handleChange($event)"
+      :min="rentMin"
+      :max="rentMax"
+      :value="rentValue"
+      @handleChange="handleRentChange($event)"
     />
   </div>
 </template>

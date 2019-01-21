@@ -1,6 +1,8 @@
 <script>
 import { mapActions } from "vuex";
 
+import scalarFormatter from "../formatters/scalar";
+
 import Loader from "../components/Loader.vue";
 import SliderControl from "../components/SliderControl.vue";
 import SwitchControl from "../components/SwitchControl.vue";
@@ -34,6 +36,17 @@ export default {
     },
     rentValue() {
       return this.$store.state.rentValue;
+    },
+    prettyRentValue() {
+      return scalarFormatter(
+        {
+          unit: "£",
+          comma: true,
+          decimals: 2,
+          display: ({ value, unit }) => `${unit}${value}`
+        },
+        this.$store.state.rentValue / 100
+      );
     }
   },
   methods: {
@@ -50,12 +63,13 @@ export default {
     </transition>
     <transition name="slide">
       <div class="content" v-if="!loading" :key="'Create Flatbond'">
-        {{rentValue}}
+        {{prettyRentValue}}
         <SliderControl
           :helpText="'Adjust rent'"
           :min="rentRangeMin"
           :max="rentRangeMax"
           :value="rentValue"
+          :step="100"
           @handleChange="setRentValue($event)"
         />
         Payment: {{paymentPeriod}}

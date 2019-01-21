@@ -4,6 +4,7 @@ export default {
   props: {
     min: { type: Number, required: true },
     max: { type: Number, required: true },
+    step: { type: Number, required: true },
     value: {
       type: Number,
       required: true
@@ -23,7 +24,15 @@ export default {
 
 <template>
   <div class="slidecontainer">
-    <input class="slider" type="range" :min="min" :max="max" :value="value" @input="handleChange">
+    <input
+      class="slider"
+      type="range"
+      :step="step"
+      :min="min"
+      :max="max"
+      :value="value"
+      @input="handleChange"
+    >
     <svg
       width="39px"
       height="11px"

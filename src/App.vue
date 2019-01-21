@@ -1,14 +1,16 @@
 <script>
 import Slider from "./components/Slider.vue";
+import SwitchControl from "./components/SwitchControl.vue";
 
 export default {
   name: "App",
   components: {
-    Slider
+    Slider,
+    SwitchControl
   },
   data() {
     return {
-      weekly: true,
+      paymentPeriod: "Weekly",
       rentValue: 25,
       rentMin: 0,
       rentMax: 1000
@@ -18,6 +20,10 @@ export default {
     handleRentChange(payload) {
       // Crude way to turn a string into a number
       this.rentValue = ~~payload;
+    },
+    handlePaymentPeriodChange(payload) {
+      // Crude way to turn a string into a number
+      this.paymentPeriod = payload;
     }
   }
 };
@@ -33,6 +39,11 @@ export default {
       :max="rentMax"
       :value="rentValue"
       @handleChange="handleRentChange($event)"
+    />
+    Payment: {{paymentPeriod}}
+    <SwitchControl
+      :options="['Weekly', 'Monthly']"
+      @handleChange="handlePaymentPeriodChange($event)"
     />
   </div>
 </template>

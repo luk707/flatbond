@@ -16,5 +16,6 @@ export default {
 .App {
   padding: 20px;
   font-family: "Sarabun", sans-serif;
+  position: relative;
 }
 </style>

@@ -7,5 +7,8 @@ export default {
   },
   setRentValue({ commit }, rentValue) {
     commit("setRentValue", rentValue);
+  },
+  setPostcode({ commit }, postcode) {
+    commit("setPostcode", postcode);
   }
 };

@@ -12,5 +12,8 @@ export default {
   },
   setRentValue(state, rentValue) {
     state.rentValue = rentValue;
+  },
+  setPostcode(state, postcode) {
+    state.postcode = postcode;
   }
 };

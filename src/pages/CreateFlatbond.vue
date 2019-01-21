@@ -27,6 +27,11 @@ export default {
     };
   },
   created() {
+    // Ensure store is prepped for new entry
+    this.$store.commit("setPostcode", "");
+    this.$store.commit("setRentValue", 2500);
+    this.$store.commit("setRentRangeMin", 2500);
+    this.$store.commit("setRentRangeMax", 200000);
     this.loading = true;
     this.error = null;
     axios
@@ -57,6 +62,9 @@ export default {
       // Convert to number
       return ~~this.$store.state.rentValue;
     },
+    postcode() {
+      return this.$store.state.postcode;
+    },
     prettyRentValue() {
       return scalarFormatter(
         constants.currencyScalarConfig,
@@ -86,7 +94,24 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setPaymentPeriod", "setRentValue"])
+    ...mapActions(["setPaymentPeriod", "setRentValue"]),
+    handleSubmit(e) {
+      e.preventDefault();
+      axios
+        .post(
+          "https://cxynbjn3wf.execute-api.eu-west-2.amazonaws.com/production/flatbond",
+          {
+            rent_value: this.rentValue,
+            postcode: this.postcode
+          }
+        )
+        .then(() => {
+          // success
+        })
+        .catch(() => {
+          //error submitting
+        });
+    }
   }
 };
 </script>
@@ -99,20 +124,22 @@ export default {
     </transition>
     <transition name="slide">
       <div class="content" v-if="!loading" :key="'Create Flatbond'">
-        {{prettyRentValue}}
-        <SliderControl
-          :helpText="'Adjust rent'"
-          :min="rentRangeMin"
-          :max="rentRangeMax"
-          :value="rentValue"
-          :step="paymentPeriod === 'Weekly' ? 500 : 1000"
-          @handleChange="setRentValue($event)"
-        />
-        Payment: {{paymentPeriod}}
-        <SwitchControl :options="['Weekly', 'Monthly']" @handleChange="setPaymentPeriod($event)"/>
-        <p>Membership fee (excl. VAT) {{flatbondBreakdown.membership_fee_before_vat}}</p>
-        <p>Membership fee {{flatbondBreakdown.membership_fee}}</p>
-        <router-link to="/details">details</router-link>
+        <form @submit="handleSubmit">
+          {{`${prettyRentValue} ${paymentPeriod === 'Weekly' ? 'pw' : 'pcm'}`}}
+          <SliderControl
+            :helpText="'Adjust rent'"
+            :min="rentRangeMin"
+            :max="rentRangeMax"
+            :value="rentValue"
+            :step="paymentPeriod === 'Weekly' ? 500 : 1000"
+            @handleChange="setRentValue($event)"
+          />
+          Payment: {{paymentPeriod}}
+          <SwitchControl :options="['Weekly', 'Monthly']" @handleChange="setPaymentPeriod($event)"/>
+          <p>Membership fee (excl. VAT) {{flatbondBreakdown.membership_fee_before_vat}}</p>
+          <p>Membership fee {{flatbondBreakdown.membership_fee}}</p>
+          <button>Submit</button>
+        </form>
       </div>
     </transition>
   </div>

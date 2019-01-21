@@ -8,6 +8,7 @@ import plugins from "./plugins";
 Vue.use(Vuex);
 
 const initialState = {
+  postcode: "",
   paymentPeriod: "Weekly",
   rentValue: 2500,
   rentRangeMin: 2500,

@@ -1,0 +1,19 @@
+{
+  "name": "flatfair",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "neutrino build",
+    "start": "neutrino start",
+    "test": "neutrino test"
+  },
+  "dependencies": {
+    "vue": "^2.5.22"
+  },
+  "devDependencies": {
+    "@neutrinojs/jest": "^8.3.0",
+    "@neutrinojs/vue": "^8.3.0",
+    "neutrino": "^8.3.0"
+  }
+}

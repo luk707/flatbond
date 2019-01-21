@@ -1,7 +1,10 @@
 <script>
 import { mapActions } from "vuex";
 
+import constants from "../constants";
+
 import scalarFormatter from "../formatters/scalar";
+import calculateFlatbondBreakdown from "../util/calculate-flatbond-breakdown";
 
 import Loader from "../components/Loader.vue";
 import SliderControl from "../components/SliderControl.vue";
@@ -39,14 +42,30 @@ export default {
     },
     prettyRentValue() {
       return scalarFormatter(
-        {
-          unit: "£",
-          comma: true,
-          decimals: 2,
-          display: ({ value, unit }) => `${unit}${value}`
-        },
+        constants.currencyScalarConfig,
         this.$store.state.rentValue / 100
       );
+    },
+    flatbondBreakdown() {
+      const {
+        membership_fee_before_vat,
+        membership_fee
+      } = calculateFlatbondBreakdown({
+        rentValue: this.$store.state.rentValue / 100,
+        monthly: this.$store.state.paymentPeriod === "Monthly",
+        fixedMembershipFee: false,
+        fixedMembershipFeeAmountL: 0
+      });
+      return {
+        membership_fee_before_vat: scalarFormatter(
+          constants.currencyScalarConfig,
+          membership_fee_before_vat
+        ),
+        membership_fee: scalarFormatter(
+          constants.currencyScalarConfig,
+          membership_fee
+        )
+      };
     }
   },
   methods: {
@@ -74,6 +93,8 @@ export default {
         />
         Payment: {{paymentPeriod}}
         <SwitchControl :options="['Weekly', 'Monthly']" @handleChange="setPaymentPeriod($event)"/>
+        <p>Membership fee (excl. VAT) {{flatbondBreakdown.membership_fee_before_vat}}</p>
+        <p>Membership fee {{flatbondBreakdown.membership_fee}}</p>
         <router-link to="/details">details</router-link>
       </div>
     </transition>

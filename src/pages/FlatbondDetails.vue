@@ -63,7 +63,7 @@ export default {
     </div>
     <p class="caveat">Membership fee (excl. VAT) {{flatbondBreakdown.membership_fee_before_vat}}</p>
     <p class="caveat">Membership fee {{flatbondBreakdown.membership_fee}}</p>
-    <router-link class="button-link" to="/">create another flatbond</router-link>
+    <router-link class="button-link" to="/">Create another flatbond</router-link>
   </div>
 </template>
 

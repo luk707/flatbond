@@ -22,9 +22,7 @@ export default {
     return {
       loading: true,
       submitting: false,
-      error: null,
-      fixed_membership_fee: false,
-      fixed_membership_fee_amount: 0
+      error: null
     };
   },
   created() {
@@ -40,9 +38,14 @@ export default {
         "https://cxynbjn3wf.execute-api.eu-west-2.amazonaws.com/production/config"
       )
       .then(response => {
-        this.fixed_membership_fee = response.data.fixed_membership_fee;
-        this.fixed_membership_fee_amount =
-          response.data.fixed_membership_fee_amount / 100;
+        this.$store.commit(
+          "setMembershipFee",
+          response.data.fixed_membership_fee
+        );
+        this.$store.commit(
+          "setMembershipFeeAmount",
+          response.data.fixed_membership_fee_amount / 100
+        );
         this.loading = false;
       })
       .catch(error => {
@@ -79,8 +82,8 @@ export default {
       } = calculateFlatbondBreakdown({
         rentValue: this.$store.state.rentValue / 100,
         monthly: this.$store.state.paymentPeriod === "Monthly",
-        fixedMembershipFee: this.fixed_membership_fee || false,
-        fixedMembershipFeeAmount: this.fixed_membership_fee_amount || 0
+        fixedMembershipFee: this.$store.state.membershipFee || false,
+        fixedMembershipFeeAmount: this.$store.state.membershipFeeAmount || 0
       });
       return {
         membership_fee_before_vat: scalarFormatter(

@@ -12,7 +12,9 @@ const initialState = {
   paymentPeriod: "Weekly",
   rentValue: 2500,
   rentRangeMin: 2500,
-  rentRangeMax: 200000
+  rentRangeMax: 200000,
+  membershipFee: false,
+  membershipFeeAmount: 0
 };
 
 export default new Vuex.Store({

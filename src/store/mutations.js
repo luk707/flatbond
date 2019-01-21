@@ -15,5 +15,11 @@ export default {
   },
   setPostcode(state, postcode) {
     state.postcode = postcode;
+  },
+  setMembershipFee(state, membershipFee) {
+    state.membershipFee = membershipFee;
+  },
+  setMembershipFeeAmount(state, membershipFeeAmount) {
+    state.membershipFeeAmount = membershipFeeAmount;
   }
 };

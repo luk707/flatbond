@@ -34,8 +34,8 @@ export default {
       } = calculateFlatbondBreakdown({
         rentValue: this.$store.state.rentValue / 100,
         monthly: this.$store.state.paymentPeriod === "Monthly",
-        fixedMembershipFee: this.fixed_membership_fee || false,
-        fixedMembershipFeeAmount: this.fixed_membership_fee_amount || 0
+        fixedMembershipFee: this.$store.state.membershipFee || false,
+        fixedMembershipFeeAmount: this.$store.state.membershipFeeAmount || 0
       });
       return {
         membership_fee_before_vat: scalarFormatter(

@@ -21,6 +21,7 @@ export default {
   data() {
     return {
       loading: true,
+      submitting: false,
       error: null,
       fixed_membership_fee: false,
       fixed_membership_fee_amount: 0
@@ -45,7 +46,7 @@ export default {
         this.loading = false;
       })
       .catch(error => {
-        this.error = true;
+        this.error = "There was an error fetching the configuration";
       });
   },
   computed: {
@@ -97,6 +98,8 @@ export default {
     ...mapActions(["setPaymentPeriod", "setRentValue"]),
     handleSubmit(e) {
       e.preventDefault();
+      // TODO, validate
+      this.submitting = true;
       axios
         .post(
           "https://cxynbjn3wf.execute-api.eu-west-2.amazonaws.com/production/flatbond",
@@ -106,9 +109,12 @@ export default {
           }
         )
         .then(() => {
-          // success
+          // success=
+          this.$router.push({ path: "/details" });
         })
         .catch(() => {
+          this.submitting = false;
+          this.error = "There was an error submitting";
           //error submitting
         });
     }

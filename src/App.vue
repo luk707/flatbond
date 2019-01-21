@@ -20,4 +20,8 @@ export default {
   max-width: 600px;
   margin: auto;
 }
+
+button {
+  font-family: "Sarabun", sans-serif;
+}
 </style>

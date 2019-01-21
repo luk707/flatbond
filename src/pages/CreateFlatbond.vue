@@ -131,6 +131,11 @@ export default {
     <transition name="slide">
       <div class="content" v-if="!loading" :key="'Create Flatbond'">
         <form @submit="handleSubmit">
+          <SwitchControl
+            :active="paymentPeriod"
+            :options="['Weekly', 'Monthly']"
+            @handleChange="setPaymentPeriod($event)"
+          />
           {{`${prettyRentValue} ${paymentPeriod === 'Weekly' ? 'pw' : 'pcm'}`}}
           <SliderControl
             :helpText="'Adjust rent'"
@@ -140,11 +145,9 @@ export default {
             :step="paymentPeriod === 'Weekly' ? 500 : 1000"
             @handleChange="setRentValue($event)"
           />
-          Payment: {{paymentPeriod}}
-          <SwitchControl :options="['Weekly', 'Monthly']" @handleChange="setPaymentPeriod($event)"/>
           <p>Membership fee (excl. VAT) {{flatbondBreakdown.membership_fee_before_vat}}</p>
           <p>Membership fee {{flatbondBreakdown.membership_fee}}</p>
-          <button>Submit</button>
+          <button class="submit-button">Submit</button>
         </form>
       </div>
     </transition>
@@ -153,15 +156,15 @@ export default {
 
 <style scoped>
 .content {
-  transition: all 0.35s ease-out;
+  transition: all 0.65s ease-out;
 }
 .slide-enter {
   opacity: 0;
-  transform: translate(0, 100px);
+  transform: translate(0, 10px);
 }
 .slide-leave-active {
   opacity: 0;
-  transform: translate(0, -100px);
+  transform: translate(0, -10px);
 }
 
 .fade-enter-active,
@@ -171,5 +174,14 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+.submit-button {
+  border: none;
+  padding: 10px 16px;
+  background-color: #6785ff;
+  font-size: 20px;
+  color: white;
+  border-radius: 3px;
 }
 </style>

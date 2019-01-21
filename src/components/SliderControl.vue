@@ -56,6 +56,7 @@ export default {
 
 <style scoped>
 .slidecontainer {
+  margin: 16px 0;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -77,7 +78,7 @@ export default {
   opacity: 0.7;
   -webkit-transition: 0.2s;
   transition: opacity 0.2s;
-  margin-bottom: 10px;
+  margin-bottom: 18px;
 }
 
 .slider:hover {

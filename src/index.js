@@ -1,5 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
+import store from "./store";
+
 import App from "./App.vue";
 import CreateFlatbond from "./pages/CreateFlatbond.vue";
 import FlatbondDetails from "./pages/FlatbondDetails.vue";
@@ -16,6 +19,7 @@ const router = new VueRouter({
 });
 
 export default new Vue({
+  store,
   router,
   el: "#root",
   render: h => h(App)

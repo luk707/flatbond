@@ -58,6 +58,9 @@ export default {
     <div>
       <span class="price">{{`${prettyRentValue} ${paymentPeriod === 'Weekly' ? 'pw' : 'pcm'}`}}</span>
     </div>
+    <div>
+      <span class="postcode">{{postcode}}</span>
+    </div>
     <p class="caveat">Membership fee (excl. VAT) {{flatbondBreakdown.membership_fee_before_vat}}</p>
     <p class="caveat">Membership fee {{flatbondBreakdown.membership_fee}}</p>
     <router-link class="button-link" to="/">create another flatbond</router-link>
@@ -68,6 +71,11 @@ export default {
 .price {
   font-weight: 400;
   font-size: 28px;
+}
+.postcode {
+  font-weight: 800;
+  font-size: 18px;
+  color: #777;
 }
 .caveat {
   line-height: 10px;

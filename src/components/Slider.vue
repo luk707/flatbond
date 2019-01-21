@@ -1,5 +1,6 @@
 <script>
 export default {
+  name: "Slider",
   props: {
     min: { type: Number, required: true },
     max: { type: Number, required: true },

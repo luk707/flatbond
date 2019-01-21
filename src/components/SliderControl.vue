@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "Slider",
+  name: "SliderControl",
   props: {
     min: { type: Number, required: true },
     max: { type: Number, required: true },

@@ -1,11 +1,11 @@
 <script>
-import Slider from "./components/Slider.vue";
+import SliderControl from "./components/SliderControl.vue";
 import SwitchControl from "./components/SwitchControl.vue";
 
 export default {
   name: "App",
   components: {
-    Slider,
+    SliderControl,
     SwitchControl
   },
   data() {
@@ -33,7 +33,7 @@ export default {
   <div :class="$style.App">
     <h1>Flatbond app</h1>
     {{rentValue}}
-    <Slider
+    <SliderControl
       :helpText="'Adjust rent'"
       :min="rentMin"
       :max="rentMax"

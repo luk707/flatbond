@@ -27,7 +27,13 @@ export default {
   <div :class="$style.App">
     <h1>Flatbond app</h1>
     {{weeklyRent.value}}
-    <Slider :min="1" :max="10" :value="weeklyRent.value" @handleChange="handleChange($event)"/>
+    <Slider
+      :helpText="'Adjust rent'"
+      :min="1"
+      :max="10"
+      :value="weeklyRent.value"
+      @handleChange="handleChange($event)"
+    />
   </div>
 </template>
 

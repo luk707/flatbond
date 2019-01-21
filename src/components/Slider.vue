@@ -6,10 +6,6 @@ export default {
     value: {
       type: Number,
       required: true
-    },
-    weekly: {
-      type: Boolean,
-      required: true
     }
   },
   methods: {

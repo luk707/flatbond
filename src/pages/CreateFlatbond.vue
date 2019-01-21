@@ -42,12 +42,12 @@ export default {
 
 <template>
   <div>
+    <h1>Create FlatBond</h1>
     <transition name="fade">
       <Loader v-if="loading"/>
     </transition>
     <transition name="slide">
       <div class="content" v-if="!loading" :key="'Create Flatbond'">
-        <h1>Flatbond app</h1>
         {{rentValue}}
         <SliderControl
           :helpText="'Adjust rent'"

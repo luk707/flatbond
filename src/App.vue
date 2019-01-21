@@ -17,5 +17,7 @@ export default {
   padding: 20px;
   font-family: "Sarabun", sans-serif;
   position: relative;
+  max-width: 600px;
+  margin: auto;
 }
 </style>

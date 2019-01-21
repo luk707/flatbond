@@ -14,10 +14,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
-      rentValue: 25,
-      rentMin: 0,
-      rentMax: 1000
+      loading: true
     };
   },
   created() {
@@ -28,14 +25,19 @@ export default {
   computed: {
     paymentPeriod() {
       return this.$store.state.paymentPeriod;
+    },
+    rentRangeMin() {
+      return this.$store.state.rentRangeMin;
+    },
+    rentRangeMax() {
+      return this.$store.state.rentRangeMax;
+    },
+    rentValue() {
+      return this.$store.state.rentValue;
     }
   },
   methods: {
-    ...mapActions(["setPaymentPeriod"]),
-    handleRentChange(payload) {
-      // Crude way to turn a string into a number
-      this.rentValue = ~~payload;
-    }
+    ...mapActions(["setPaymentPeriod", "setRentValue"])
   }
 };
 </script>
@@ -51,10 +53,10 @@ export default {
         {{rentValue}}
         <SliderControl
           :helpText="'Adjust rent'"
-          :min="rentMin"
-          :max="rentMax"
+          :min="rentRangeMin"
+          :max="rentRangeMax"
           :value="rentValue"
-          @handleChange="handleRentChange($event)"
+          @handleChange="setRentValue($event)"
         />
         Payment: {{paymentPeriod}}
         <SwitchControl :options="['Weekly', 'Monthly']" @handleChange="setPaymentPeriod($event)"/>

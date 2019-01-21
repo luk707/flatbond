@@ -9,14 +9,15 @@ Vue.use(Vuex);
 
 const initialState = {
   paymentPeriod: "Weekly",
-  rentValue: 25,
-  rentMin: 0,
-  rentMax: 1000
+  rentValue: 2500,
+  rentRangeMin: 2500,
+  rentRangeMax: 200000
 };
 
 export default new Vuex.Store({
   state: JSON.parse(
-    window.localStorage.getItem(STORAGE_KEY) || JSON.stringify(initialState)
+    // window.localStorage.getItem(STORAGE_KEY) ||
+    JSON.stringify(initialState)
   ),
   actions,
   mutations,

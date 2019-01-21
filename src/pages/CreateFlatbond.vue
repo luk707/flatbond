@@ -95,9 +95,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setPaymentPeriod", "setRentValue"]),
+    ...mapActions(["setPaymentPeriod", "setRentValue", "setPostcode"]),
+    handleChangePostcode(e) {
+      this.setPostcode(e.target.value);
+    },
     handleSubmit(e) {
       e.preventDefault();
+      if (!this.postcode) {
+        this.error = "You must specify your postcode to continue.";
+        return;
+      }
       // TODO, validate
       this.submitting = true;
       axios
@@ -125,11 +132,12 @@ export default {
 <template>
   <div>
     <h1>Create FlatBond</h1>
+    <div class="error" v-if="error !== null">{{error}}</div>
     <transition name="fade">
-      <Loader v-if="loading"/>
+      <Loader v-if="loading || submitting"/>
     </transition>
     <transition name="slide">
-      <div class="content" v-if="!loading" :key="'Create Flatbond'">
+      <div class="content" v-if="!loading && !submitting" :key="'Create Flatbond'">
         <form @submit="handleSubmit">
           <SwitchControl
             :active="paymentPeriod"
@@ -145,8 +153,14 @@ export default {
             :step="paymentPeriod === 'Weekly' ? 500 : 1000"
             @handleChange="setRentValue($event)"
           />
-          <p>Membership fee (excl. VAT) {{flatbondBreakdown.membership_fee_before_vat}}</p>
-          <p>Membership fee {{flatbondBreakdown.membership_fee}}</p>
+          <div>
+            <label>Postcode</label>
+          </div>
+          <input :value="postcode" @input="handleChangePostcode">
+          <p
+            class="caveat"
+          >Membership fee (excl. VAT) {{flatbondBreakdown.membership_fee_before_vat}}</p>
+          <p class="caveat">Membership fee {{flatbondBreakdown.membership_fee}}</p>
           <button class="submit-button">Submit</button>
         </form>
       </div>
@@ -164,7 +178,7 @@ export default {
 }
 .slide-leave-active {
   opacity: 0;
-  transform: translate(0, -10px);
+  transform: translate(0, 10px);
 }
 
 .fade-enter-active,
@@ -177,11 +191,47 @@ export default {
 }
 
 .submit-button {
+  margin-top: 10px;
   border: none;
   padding: 10px 16px;
   background-color: #6785ff;
   font-size: 20px;
   color: white;
   border-radius: 3px;
+}
+
+label {
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+input {
+  margin-top: 3px;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 10px 16px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #aabbff;
+}
+
+.caveat {
+  line-height: 10px;
+  font-size: 14px;
+  color: #888;
+}
+
+.error {
+  background-color: #facdcd;
+  color: #610404;
+  border-left: 5px solid #e66a6a;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 </style>
